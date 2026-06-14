@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BloodCare Hospital - Blood Bank</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+        /* --- DESIGN SYSTEM ELEMENTS --- */
+        :root {
+            --primary-red: #e03f3e;       /* Bright red used in buttons/headers */
+            --nav-red: #ff3e3e;          /* Deep red for hovers */
+            --text-dark: #1f2937;         /* Dark gray for headings */
+            --text-light: #6b7280;        /* Muted gray for paragraphs */
+            --bg-light: #f5f7fa;          /* Soft background color */
+            --footer-bg: #1f2937;         /* Dark slate blue for footer */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* --- TOP UTILITY BAR --- */
+        .top-bar {
+            background-color: #ffffff;
+            padding: 0px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .top-bar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            flex-wrap: wrap;
+        }
+        .logotit{
+            font-size: 36px;
+            font-family: 'poppins', sans-serif;
+        }
+        .hospital-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.2rem;
+            color: #111827;
+        }
+        .hospital-brand span {
+            font-size: 24px;
+            color: var(--primary-red);
+            vertical-align: super;
+        }
+        .no{
+            color: var(--text-light);
+            font-size: 24px;
+        }
+
+        /* --- RED NAVIGATION BAR --- */
+        nav {
+            background-color: var(--nav-red);
+            padding: 10px 0;
+            text-align: center;
+        }
+        nav a {
+            color: var(--text-dark);
+            text-decoration: none;
+            margin: 0 25px;
+            font-family: 'inter' , sans-serif;
+            font-weight: 500;
+            font-size: 24px;
+            transition: opacity 0.6s;
+        }
+        nav a:hover {
+            opacity: 0.8;
+            color: var(--bg-light);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            background-color: var(--bg-light);
+            padding: 50px 0;
+        }
+        .hero-grid {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            align-items: center;
+        }
+     
+        .hero-text h1 {
+            font-size: 80px;
+            color: var(--text-dark);
+            line-height: 1.2;
+            font-family: 'poppins', sans-serif;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+        .hero-text h1 span {
+            color: var(--primary-red);
+            font-weight: bold;
+        }
+        .hero-buttons {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            flex: 1;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .btn-filled,
+        .btn-outline{
+            display: inline-block;
+    width: fit-content;
+    margin-bottom: 40px;
+        }
+        .btn-filled {
+            background-color: var(--primary-red);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 6px;
+            font-family: 'inter', sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all .17s ease-in-out;
+        }
+        .btn-filled:hover{
+            background-color: #c63737;
+
+        }
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text-dark);
+            border: 1.7px solid var(--primary-red);
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 24px;
+            font-family: 'inter', sans-serif;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+        }
+       
+        .hero-image {
+            text-align: center;
+        }
+        /* CSS Generated Blood Drop Vector Graphic */
+        .blood-drop-graphic {
+            display: inline-block;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle at 65% 35%, #ff6b6b, #cc0000, #990000);
+            border-top-left-radius: 0;
+            border-top-right-radius: 100%;
+            border-bottom-left-radius: 100%;
+            border-bottom-right-radius: 100%;
+            transform: rotate(45deg);
+            box-shadow: 0 15px 35px rgba(153, 0, 0, 0.35);
+            position: relative;
+        }
+      
+        /* --- SECTION HEADINGS --- */
+        .section-title {
+            text-align: left;
+            margin: 60px 0 30px 0;
+            font-size: 36px;
+            font-family: 'poppins', sans-serif;
+            color: #111827;
+        }
+        .section-title span {
+            color: var(--primary-red);
+        }
+
+        /* --- 3-CARD COMPATIBILITY SECTION --- */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+      .feature-card{
+    border-radius: 10px;
+background: #fff;
+box-shadow:  8px 8px 20px #a8a8a8,
+             -8px -8px 20px #ffffff;
+             padding: 25px;
+             transition: all .3s ease-in-out;
+}
+.feature-card:hover{
+    transform: scale(1.02);
+    box-shadow:  12px 12px 20px #a8a8a8,
+             -8px -8px 20px #ffffff;
+}
+        .feature-card h3 {
+            font-size: 32px;
+            margin-bottom: 15px;
+            font-family: 'poppins', sans-serif;
+            color: #111827;
+        }
+        .feature-card p {
+            font-size: 16px;
+            color: var(--text-light);
+                      font-family: 'inter', sans-serif;
+        }
+
+        .quote-text {
+            text-align: center;
+            font-family: 'inter', sans-serif;
+            font-weight: bold;
+            color: var(--text-light);
+            font-size: 16px;
+            margin: 20px 0 50px 0;
+        }
+
+        /* --- QUICK FACTS GRID (BLOOD TYPES) --- */
+        .facts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        @media (min-width: 600px) {
+            .facts-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+        .fact-card {
+            background: white;
+            padding: 20px 15px;
+            border-radius: 12px;
+
+box-shadow:  4px 4px 12px #c1c1c1,
+             -4px -4px 12px #ffffff;
+             text-align: center;
+              transition: all .3s ease-in-out;
+        }
+        .fact-card:hover{
+                transform: scale(1.01);
+    box-shadow:  6px 6px 6px #a8a8a8,
+             -4px -4px 20px #ffffff;
+        }
+        .fact-card h4 {
+            font-size: 24px;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+        .fact-card p {
+            font-size: 16px;
+            color: var(--text-light);
+            font-family: 'inter', sans-serif;
+        }
+        .center-btn-wrapper {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        /* --- DARK FOOTER SECTION --- */
+        footer {
+            background-color: var(--footer-bg);
+            color: #9ca3af;
+            padding: 50px 0 20px 0;
+            font-size: 16px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #374151;
+            margin-bottom: 20px;
+        }
+        .footer-about h3 {
+            color: white;
+            margin-bottom: 15px;
+            margin-left: 50px;
+            font-size: 24px;
+            text-align: center;
+            font-family: 'poppins', sans-serif;
+            font-weight: 400;
+        }
+        .footer-links h4, .footer-project h4 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 24px;
+            letter-spacing: 1px;
+        }
+        .footer-links a {
+            display: block;
+            color: #9ca3af;
+            text-decoration: none;
+            margin-bottom: 8px;
+        }
+        .footer-links a:hover {
+            color: white;
+        }
+        .footer-project ul {
+            list-style: none;
+        }
+        .footer-project li {
+            margin-bottom: 8px;
+        }
+        .copyright {
+            text-align: center;
+            font-size: 16px;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="container top-bar-content">
+            <div class="hospital-brand">
+                <img src="https://static.vecteezy.com/system/resources/previews/005/377/647/non_2x/medical-care-logo-clinic-logo-vector.jpg" alt="logo" height="100px" width="100px">
+                <div class="logotit">BloodCare Blood Bank</div>
+                <span>24*7</span>
+            </div>
+            <div class="no">+91 9876543210, +91 1234567890</div>
+        </div>
+    </div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="donorregistration.html">Donor Registration</a>
+        <a href="bloodstock.html">Blood Stock</a>
+        <a href="bloodrequest.html">Request Blood</a>
+    </nav>
+
+    <main class="hero">
+        <div class="container hero-grid">
+            <div class="hero-text">
+                <h1>Saving Lives<br>Through <span>Blood Donation.</span></h1>
+
+                <div class="hero-buttons">
+                    <a href="donorregistration.html" class="btn-filled">Become a Donor</a> 
+                    <a href="bloodrequest.html" class="btn-outline">Request Blood</a>
+                </div>
+            </div>
+
+            <div class="hero-image">
+                <div class="blood-drop-graphic"></div>
+            </div>
+        </div>
+    </main>
+
+    <div class="container">
+
+        <h2 class="section-title">Why <span>Blood Donation</span> Matters?</h2>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>Save Lives</h3>
+                <p>Donated blood helps patients during surgeries, accidents, and medical emergencies where immediate blood supply is required.</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>Real-Time Availability</h3>
+                <p>Our system helps manage and track available blood units in the blood bank for quick access during emergencies.</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>Safe Management</h3>
+                <p>All donor records and blood stock are digitally managed to ensure safety, accuracy, and proper utilization of blood units.</p>
+            </div>
+        </div>
+
+        <p class="quote-text">"Every drop of blood can save a life."</p>
+
+        <hr>
+
+        <h2 class="section-title"><span>Blood </span>Types in Stock</h2>
+
+        <div class="facts-grid">
+            <div class="fact-card"><h4>A+</h4><p>Available for patients with A+ and AB+ requirement.</p></div>
+            <div class="fact-card"><h4>A-</h4><p>Rare donor type, highly valuable in emergencies.</p></div>
+            <div class="fact-card"><h4>B+</h4><p>Common blood type used in many transfusions.</p></div>
+            <div class="fact-card"><h4>B-</h4><p>Limited availability, important for rare matching cases.</p></div>
+            <div class="fact-card"><h4>AB+</h4><p>Universal receiver blood type.</p></div>
+            <div class="fact-card"><h4>AB-</h4><p>Very rare blood type in the system.</p></div>
+            <div class="fact-card"><h4>O+</h4><p>Most commonly used blood type in hospitals.</p></div>
+            <div class="fact-card"><h4>O-</h4><p>Universal donor, critical for emergencies.</p></div>
+        </div>
+
+        <div class="center-btn-wrapper">
+            <a href="bloodrequest.html" class="btn-filled">Request Blood</a>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <footer>
+        <div class="container footer-grid">
+
+            <div class="footer-about">
+                <img src="https://static.vecteezy.com/system/resources/previews/005/377/647/non_2x/medical-care-logo-clinic-logo-vector.jpg" 
+                     alt="logo" height="70px" width="70px" style="border-radius: 50%;">
+                <h3>BloodCare Blood Bank</h3>
+                <p>A complete digital system to manage donors, blood stock, and emergency blood requests.</p>
+            </div>
+
+            <div class="footer-links">
+                <h4>Navigation</h4>
+                <a href="index.html">Home</a>
+                <a href="donorregistration.html">Donor Registration</a>
+                <a href="bloodstock.html">Blood Stock</a>
+                <a href="bloodrequest.html">Request Blood</a>
+            </div>
+
+            <div class="footer-project">
+                <h4>Project</h4>
+                <ul>
+                    <li>• Class Computer Project</li>
+                    <li>• Blood Bank Management System</li>
+                    <li>• Developed by Akshit, Raj Kumar and Hritik</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="copyright">
+            © 2026 BloodCare Blood Bank | Educational Project
+        </div>
+    </footer>
+
+</body>
+</html>
