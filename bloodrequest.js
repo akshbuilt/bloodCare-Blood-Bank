@@ -21,45 +21,20 @@ document.addEventListener("DOMContentLoaded", () => {
             loader.style.display = "flex";
 
             btn.disabled = true;
-            btn.innerHTML = "Sending OTP...";
+            btn.innerHTML = "Sending OTP to Email...";
 
-            let phone =
-                document.getElementById("phone")
-                .value
-                .trim();
-
-            if (!phone.startsWith("+91")) {
-                phone = "+91" + phone;
-            }
+            const email = document.getElementById("email").value.trim();
 
             const formData = {
-                patient_name:
-                    document.getElementById("name").value,
-
-                phone: phone,
-
-                email:
-                    document.getElementById("email").value,
-
-                age:
-                    document.getElementById("age").value,
-
-                gender:
-                    document.querySelector(
-                        'input[name="gender"]:checked'
-                    )?.value,
-
-                blood_group:
-                    document.getElementById("bloodGroup").value,
-
-                address:
-                    document.getElementById("address").value,
-
-                weight:
-                    document.getElementById("weight").value,
-
-                urgency:
-                    document.getElementById("urgency").value
+                patient_name: document.getElementById("name").value,
+                phone: document.getElementById("phone").value.trim(),
+                email: email,
+                age: document.getElementById("age").value,
+                gender: document.querySelector('input[name="gender"]:checked')?.value,
+                blood_group: document.getElementById("bloodGroup").value,
+                address: document.getElementById("address").value,
+                weight: document.getElementById("weight").value,
+                urgency: document.getElementById("urgency").value
             };
 
             // Validation
@@ -91,15 +66,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 JSON.stringify(formData)
             );
 
+            // Phone ki jagah ab Email save hoga localStorage me
             localStorage.setItem(
-                "phone",
-                phone
+                "email",
+                email
             );
 
-            const { error } =
-                await supabaseClient.auth.signInWithOtp({
-                    phone: phone
-                });
+            // Phone OTP ki jagah Email OTP call
+            const { error } = await supabaseClient.auth.signInWithOtp({
+                email: email
+            });
 
             if (error) {
 
@@ -120,16 +96,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
             loader.style.display = "none";
 
-            btn.innerHTML =
-                "OTP Sent Successfully";
+            btn.innerHTML = "OTP Sent to Email Successfully";
 
-            alert(
-                "OTP Sent Successfully!"
-            );
+            alert("OTP has been sent to your email!");
 
             setTimeout(() => {
-                window.location.href =
-                    "otp.html";
+                window.location.href = "otp.html";
             }, 1000);
 
         } catch (err) {
