@@ -2,36 +2,44 @@ const supabaseUrl = "https://jsmkyuzqatgvlmliyjdf.supabase.co";
 const supabaseKey = "sb_publishable_9NZGLnpfxDlospuMphyQ8w_bR3yPE2_";
 
 const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
 async function verifyOtp() {
 
     const otp = document.getElementById("otpInput").value.trim();
-    const phone = localStorage.getItem("phone");
+    // Phone ki jagah localStorage se Email read karega
+    const email = localStorage.getItem("email");
 
     const btn = document.getElementById("verifyBtn");
+
+    if (!email) {
+        alert("Session expired or email missing. Please try submitting again.");
+        window.location.href = "bloodrequest.html";
+        return;
+    }
 
     try {
 
         btn.disabled = true;
-        btn.innerHTML = "⏳ Verifying...";
+        btn.innerHTML = " Verifying...";
 
-        // 🔥 IMPORTANT FIX
+        // Email OTP verify karne ke liye updated syntax
         const { data, error } = await supabaseClient.auth.verifyOtp({
-            phone: phone,
+            email: email,
             token: otp,
-            type: "sms"
+            type: "email"
         });
 
         console.log(data, error);
 
         if (error) {
-            alert("❌ OTP Wrong: " + error.message);
+            alert(" OTP Wrong: " + error.message);
 
             btn.disabled = false;
             btn.innerHTML = "Verify OTP";
             return;
         }
 
-        alert("🎉 OTP Verified!");
+        alert("OTP Verified!");
 
         const formData = JSON.parse(localStorage.getItem("pendingData"));
 
@@ -40,17 +48,23 @@ async function verifyOtp() {
             .insert([formData]);
 
         if (dbError) {
-            alert("❌ DB Error: " + dbError.message);
+            alert(" Database Error: " + dbError.message);
+            
+            btn.disabled = false;
+            btn.innerHTML = "Verify OTP";
             return;
         }
 
-        alert("🎉 Blood Request Submitted Successfully!");
+        alert("Your Blood Request is Submitted Successfully to our database!");
 
         localStorage.clear();
-        window.location.href = "index.html";
+        window.location.href = "bloodrequest.html";
 
     } catch (err) {
         console.log(err);
-        alert("❌ Error: " + err.message);
+        alert("Error: " + err.message);
+
+        btn.disabled = false;
+        btn.innerHTML = "Verify OTP";
     }
 }
